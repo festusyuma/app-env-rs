@@ -19,7 +19,7 @@ struct.
 Define two structs: an "optional" one whose fields mirror the env vars/secret keys
 (all `Option<_>`, implementing `MergeOptionalConfig`), and the final one your app
 actually uses (implementing `From<Optional>`, where required fields are unwrapped and
-optional ones are validated):
+optional ones are validated). Both must implement `Deserialize`:
 
 ```rust
 use env::MergeOptionalConfig;
@@ -40,6 +40,7 @@ impl MergeOptionalConfig for OptionalAppConfig {
     }
 }
 
+#[derive(Deserialize)]
 struct AppConfig {
     port: u16,
     api_key: String,
